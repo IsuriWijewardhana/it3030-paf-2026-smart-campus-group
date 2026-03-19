@@ -27,11 +27,8 @@ Before you begin, ensure you have the following installed:
 
 ## Installation Steps
 
-### 1. Clone the Repository
-
 ```bash
-git clone https://github.com/Yashini-Hettiarachchi/LMS.git
-cd LMS
+cd smart_campus
 ```
 
 ### 2. Set Up the Backend
@@ -98,40 +95,8 @@ If you need to change the backend port (default: 8089), update:
 server.port=8089
 ```
 
-### Frontend API URL Configuration
 
-If you change the backend port, you'll need to update the API URL in the frontend:
 
-- Update the API_URL constant in each component that makes API calls
-
-## Troubleshooting
-
-### Common Issues
-
-1. **MongoDB Connection Issues**:
-   - Ensure MongoDB is running: `sc query mongodb` (Windows) or `systemctl status mongodb` (Linux)
-   - Check MongoDB logs for errors
-
-2. **Backend Won't Start**:
-   - Verify Java version is 17+: `java -version`
-   - Check if port 8089 is already in use: `netstat -ano | findstr 8089` (Windows) or `lsof -i:8089` (Linux)
-
-3. **Frontend Issues**:
-   - Clear npm cache: `npm cache clean --force`
-   - Delete node_modules and reinstall: `rm -rf node_modules && npm install`
-   - Check browser console for errors
-
-4. **CORS Issues**:
-   - The backend is configured to allow cross-origin requests from any origin
-   - If you're experiencing CORS issues, check the network tab in browser developer tools
-
-## Next Steps
-
-After installation, you can:
-
-1. Register a new user account
-2. Log in with your credentials
-3. Create, view, edit, and delete courses
 4. Explore the various features of the LMS
 
 For more information, refer to the [README.md](README.md) file.
