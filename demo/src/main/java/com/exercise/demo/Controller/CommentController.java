@@ -22,13 +22,13 @@ public class CommentController {
     @PostMapping("/save")
     public ResponseEntity<?> saveComment(@RequestBody Comment comment) {
         Comment savedComment = commentService.saveComment(comment);
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "Comment saved successfully");
         response.put("commentId", savedComment.get_id());
         response.put("comment", savedComment);
-        
+
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -48,6 +48,7 @@ public class CommentController {
         return commentService.getCommentsByResourceIdAndType(resourceId, resourceType);
     }
 
+    //
     @GetMapping("/user/{userId}")
     public Iterable<Comment> getCommentsByUserId(@PathVariable String userId) {
         return commentService.getCommentsByUserId(userId);
@@ -56,14 +57,14 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCommentById(@PathVariable String id) {
         Optional<Comment> commentOpt = commentService.getCommentById(id);
-        
+
         if (commentOpt.isPresent()) {
             return new ResponseEntity<>(commentOpt.get(), HttpStatus.OK);
         } else {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Comment not found");
-            
+
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
@@ -71,26 +72,26 @@ public class CommentController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> updateComment(@RequestBody Comment comment, @PathVariable String id) {
         Optional<Comment> existingCommentOpt = commentService.getCommentById(id);
-        
+
         if (existingCommentOpt.isPresent()) {
             Comment existingComment = existingCommentOpt.get();
-            
+
             // Only update the content, keep other fields as is
             existingComment.setContent(comment.getContent());
-            
+
             Comment updatedComment = commentService.saveComment(existingComment);
-            
+
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Comment updated successfully");
             response.put("comment", updatedComment);
-            
+
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Comment not found");
-            
+
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
@@ -98,20 +99,20 @@ public class CommentController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable String id) {
         Optional<Comment> commentOpt = commentService.getCommentById(id);
-        
+
         if (commentOpt.isPresent()) {
             commentService.deleteComment(id);
-            
+
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Comment deleted successfully");
-            
+
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Comment not found");
-            
+
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
@@ -119,11 +120,11 @@ public class CommentController {
     @DeleteMapping("/resource/{resourceId}")
     public ResponseEntity<?> deleteCommentsByResourceId(@PathVariable String resourceId) {
         commentService.deleteCommentsByResourceId(resourceId);
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "Comments deleted successfully");
-        
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -131,11 +132,11 @@ public class CommentController {
     public ResponseEntity<?> deleteCommentsByResourceIdAndType(
             @PathVariable String resourceId, @PathVariable String resourceType) {
         commentService.deleteCommentsByResourceIdAndType(resourceId, resourceType);
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "Comments deleted successfully");
-        
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
